@@ -134,6 +134,7 @@ public class enemyMovement : MonoBehaviour
                 if (healthComponent)
                 {
                     healthComponent.ChangeHealth(-damage);
+                    transform.GetChild(0).gameObject.SetActive(true);
                 }
 
                 timer = cooldownTime;
