@@ -18,7 +18,7 @@ public class playerAttack : MonoBehaviour
 
     [SerializeField] healthSystem healthScript;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         timer = 0f;
         filter2D = new ContactFilter2D
@@ -30,35 +30,38 @@ public class playerAttack : MonoBehaviour
 
         attack = false;
     }
-    void Update()
+    private void Update()
     {
         mousePos = Input.mousePosition;
         mousePos.z = 0.0f;
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-        if (timer <= 0f)
+        if (!animManag.anim.getDying())
         {
-            if (coll.OverlapPoint(mousePos))
+            if (timer <= 0f)
             {
-                cursorTexture.cursor.setAttack();
-
-                if (Input.GetMouseButtonDown(0))
+                if (coll.OverlapPoint(mousePos))
                 {
-                    attack = true;
+                    cursorTexture.cursor.setAttack();
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        attack = true;
+                    }
+                }
+                else
+                {
+                    cursorTexture.cursor.setDefault();
                 }
             }
             else
             {
                 cursorTexture.cursor.setDefault();
+                timer -= Time.deltaTime;
             }
         }
-        else
-        {
-            cursorTexture.cursor.setDefault();
-            timer -= Time.deltaTime;
-        }
     }
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (attack == true)
         {

@@ -19,7 +19,7 @@ public class healthSystem : MonoBehaviour
     [SerializeField] float cooldownTime = 0.5f;
     float timer;
 
-    void OnEnable()
+    private void OnEnable()
     {
         setDamageble(false);
         currentHealth = maxHealth;
@@ -63,8 +63,7 @@ public class healthSystem : MonoBehaviour
             }
             else if (gameObject.tag == "Player")
             {
-                sceneManager.sceneManagerObj.GameOverScreen();
-                desactiveInstance();
+                animManag.anim.setDying(true);
             }
         }
     }
@@ -81,5 +80,10 @@ public class healthSystem : MonoBehaviour
     public void desactiveInstance()
     {
         gameObject.SetActive(false);
+
+        if (gameObject.tag == "Player")
+        {
+            sceneManager.sceneManagerObj.GameOverScreen();
+        }
     }
 }

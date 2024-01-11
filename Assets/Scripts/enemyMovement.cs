@@ -22,9 +22,13 @@ public class enemyMovement : MonoBehaviour
     Vector3 lastPos;
     int random;
 
+    SpriteRenderer sprite;
+
     void Start()
     {
         anim = gameObject.GetComponent<enemyAnimManager>();
+        sprite = gameObject.GetComponent<SpriteRenderer>();
+
         player = GameObject.FindWithTag("Player");
 
         if (player != null)
@@ -44,7 +48,7 @@ public class enemyMovement : MonoBehaviour
 
         if (player != null)
         {
-            if (player.activeSelf && !anim.getDying())
+            if (player.activeSelf && !anim.getDying() && !animManag.anim.getDying())
             {
                 if (timer <= 0f && playerHealth.IsDamageble)
                 {
@@ -83,8 +87,6 @@ public class enemyMovement : MonoBehaviour
                 rig.velocity = Vector2.zero;
             }
         }
-        
-
         anim.setMove(enemyMoved());
     }
 
@@ -96,8 +98,17 @@ public class enemyMovement : MonoBehaviour
 
     bool enemyMoved()
     {
-        var move = transform.position - lastPos;
+        Vector3 move = transform.position - lastPos;
         lastPos = transform.position;
+
+        if (move.x > 0)
+        {
+            sprite.flipX = false;
+        }
+        else if (move.x < 0)
+        {
+            sprite.flipX = true;
+        }
 
         if (move.magnitude > 0)
         {

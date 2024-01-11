@@ -29,7 +29,7 @@ public class playerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!animManag.anim.getAttacking())
+        if (!animManag.anim.getAttacking() && !animManag.anim.getDying())
         {
             if (dirX != 0 && dirY != 0)
             {

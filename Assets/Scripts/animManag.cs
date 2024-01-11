@@ -13,6 +13,10 @@ public class animManag : MonoBehaviour
         anim = this;
     }
 
+    private void OnEnable()
+    {
+        setDying(false);
+    }
     // isAttacking is diferent than playerAttack.attack
     // both starts at the same time (mouse click)
     // but attack is immediate, while isAttacking
@@ -68,5 +72,15 @@ public class animManag : MonoBehaviour
             animator.SetBool("attackRight", true);
             animator.SetBool("isRight", true);
         }
+    }
+
+    public void setDying(bool dying)
+    {
+        animator.SetBool("isDying", dying);
+    }
+
+    public bool getDying()
+    {
+        return animator.GetBool("isDying");
     }
 }
